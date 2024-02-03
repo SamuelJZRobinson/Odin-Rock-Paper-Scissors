@@ -8,40 +8,47 @@ function getComputerChoice(arr)
 
 function getPlayerChoice()
 {
+    while (true)
+    {
+        playerChoice = prompt("Enter rock, paper, or scissors").trim().toLowerCase()
 
+        if (options.includes(playerChoice))
+        {
+            return playerChoice;
+        }
+        else
+        {
+            console.log("Invalid option, try again!");
+        }
+    }
 }
 
-function checkWin()
+function checkWin(computerSelection, playerSelection)
 {
-
+    // Check tie
+    if (computerSelection == playerSelection)
+    {
+        console.log(`Tie, ${computerSelection} cannot beat ${playerSelection}`);
+    }
+    // Check CPU win conditions
+    else if (
+        (computerSelection == "rock" && playerSelection == "scissors") ||
+        (computerSelection == "paper" && playerSelection == "rock") ||
+        (computerSelection == "scissors" && playerSelection == "paper"))
+    {
+        console.log(`CPU wins, ${computerSelection} beats ${playerSelection}`);
+    }
+    else
+    {
+        console.log(`You win, ${playerSelection} beats ${computerSelection}`);
+    }
 }
 
-function playRound()
+function playGame()
 {
-    getComputerChoice(options);
-    getPlayerChoice();
-    checkWin();
+    computerSelection = getComputerChoice(options);
+    playerSelection = getPlayerChoice();
+    checkWin(computerSelection, playerSelection);
 }
 
-// playRound();
-
-// set const options (r,p,s), lowercase
-// get cpu choice [0] to [2]
-// input string option, convert to lowercase
-    // if input matches options proceed
-    // else ask again
-// compare cpu and player options
-    // if x is y then tie.
-
-    // Too strict
-    // else if x is scissors, y is paper
-    // else if x is paper, y is rock
-    // else if x is rock, y is scissors
-
-// Tie conditions
-    // Same option
-
-// Win conditions
-    // Scissors vs paper
-    // Paper vs rock
-    // Rock vs scissors
+playGame();
