@@ -1,4 +1,6 @@
 const options = ["rock", "paper", "scissors"]
+let computerScore = 0;
+let playerScore = 0;
 
 function getComputerChoice(arr)
 {
@@ -18,7 +20,7 @@ function getPlayerChoice()
         }
         else
         {
-            console.log("Invalid option, try again!");
+            console.warn("Invalid option, try again!");
         }
     }
 }
@@ -37,18 +39,36 @@ function checkWin(computerSelection, playerSelection)
         (computerSelection == "scissors" && playerSelection == "paper"))
     {
         console.log(`CPU wins, ${computerSelection} beats ${playerSelection}`);
+        computerScore += 1;
     }
     else
     {
         console.log(`You win, ${playerSelection} beats ${computerSelection}`);
+        playerScore += 1;
     }
 }
 
-function playGame()
+function playRound()
 {
     computerSelection = getComputerChoice(options);
     playerSelection = getPlayerChoice();
     checkWin(computerSelection, playerSelection);
+}
+
+function playGame()
+{
+    const totalRounds = 5;
+    computerScore = 0;
+    playerScore = 0;
+
+    for (let i = 1; i <= totalRounds; i++)
+    {
+        console.log(`-- Round ${i} --`);
+        console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
+        playRound();
+    }
+
+    console.log("Gameover!");
 }
 
 playGame();
