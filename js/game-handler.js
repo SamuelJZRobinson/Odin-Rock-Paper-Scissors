@@ -1,4 +1,4 @@
-const options = ["rock", "paper", "scissors"]
+const OPTIONS = ["rock", "paper", "scissors"]
 let computerScore = 0;
 let playerScore = 0;
 
@@ -14,7 +14,7 @@ function getPlayerChoice()
     {
         playerChoice = prompt("Enter rock, paper, or scissors").trim().toLowerCase()
 
-        if (options.includes(playerChoice))
+        if (OPTIONS.includes(playerChoice))
         {
             return playerChoice;
         }
@@ -50,7 +50,7 @@ function checkWin(computerSelection, playerSelection)
 
 function playRound()
 {
-    computerSelection = getComputerChoice(options);
+    computerSelection = getComputerChoice(OPTIONS);
     playerSelection = getPlayerChoice();
     checkWin(computerSelection, playerSelection);
 }
