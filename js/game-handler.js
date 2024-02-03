@@ -39,12 +39,12 @@ function checkWin(computerSelection, playerSelection)
         (computerSelection == "scissors" && playerSelection == "paper"))
     {
         console.log(`CPU wins, ${computerSelection} beats ${playerSelection}`);
-        computerScore += 1;
+        computerScore++;
     }
     else
     {
         console.log(`You win, ${playerSelection} beats ${computerSelection}`);
-        playerScore += 1;
+        playerScore++;
     }
 }
 
