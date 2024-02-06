@@ -1,28 +1,31 @@
 const OPTIONS = ["rock", "paper", "scissors"]
 let computerScore = 0;
 let playerScore = 0;
+let playerSelection;
+let round = 0;
+
+const rockButton = document.querySelector(".btn-rock");
+rockButton.addEventListener("click", () => {
+    playerSelection = "rock";
+    playRound();
+});
+
+const paperButton = document.querySelector(".btn-paper");
+paperButton.addEventListener("click", () => {
+    playerSelection = "paper";
+    playRound();
+});
+
+const scissorsButton = document.querySelector(".btn-scissors");
+scissorsButton.addEventListener("click", () => {
+    playerSelection = "scissors";
+    playRound();
+});
 
 function getComputerChoice(arr)
 {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
-}
-
-function getPlayerChoice()
-{
-    while (true)
-    {
-        playerChoice = prompt("Enter rock, paper, or scissors").trim().toLowerCase()
-
-        if (OPTIONS.includes(playerChoice))
-        {
-            return playerChoice;
-        }
-        else
-        {
-            console.warn("Invalid option, try again!");
-        }
-    }
 }
 
 function checkWin(computerSelection, playerSelection)
@@ -50,25 +53,26 @@ function checkWin(computerSelection, playerSelection)
 
 function playRound()
 {
-    computerSelection = getComputerChoice(OPTIONS);
-    playerSelection = getPlayerChoice();
-    checkWin(computerSelection, playerSelection);
+    round++;
+
+    if ((computerScore == 5) | (playerScore == 5))
+    {
+        console.log("Gameover");
+    }
+    else
+    {
+        computerSelection = getComputerChoice(OPTIONS);
+        checkWin(computerSelection, playerSelection);
+    
+        console.log(`-- Round ${round} --`);
+        console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
+    }
 }
 
 function playGame()
 {
-    const totalRounds = 5;
     computerScore = 0;
     playerScore = 0;
-
-    for (let i = 1; i <= totalRounds; i++)
-    {
-        console.log(`-- Round ${i} --`);
-        console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
-        playRound();
-    }
-
-    console.log("Gameover!");
 }
 
 playGame();
