@@ -3,7 +3,6 @@ const OPTIONS = ["rock", "paper", "scissors"]
 let computerScore = 0;
 let playerScore = 0;
 let playerSelection;
-let round = 0;
 let outcomeMessage = "";
 
 // Components
@@ -72,39 +71,35 @@ function checkWin(computerSelection, playerSelection)
     }
 
     showOutcome(outcomeMessage);
+    checkGameOver();
+}
+
+function checkGameOver()
+{
+    if (computerScore == 5)
+    {
+        gameover.style.display = "block";
+        winnerText.textContent = "CPU wins!";
+    }
+    else if (playerScore == 5)
+    {
+        gameover.style.display = "block";
+        winnerText.textContent = "Player wins!";
+    }
 }
 
 function playRound()
 {
-    round++;
+    computerSelection = getComputerChoice(OPTIONS);
+    checkWin(computerSelection, playerSelection);
 
-    if ((computerScore == 5) | (playerScore == 5))
-    {
-        gameover.style.display = "block";
-
-        if (computerScore == 5)
-        {
-            winnerText.textContent = "CPU wins!";
-        }
-        else
-        {
-            winnerText.textContent = "Player wins!";
-        }
-    }
-    else
-    {
-        computerSelection = getComputerChoice(OPTIONS);
-        checkWin(computerSelection, playerSelection);
-    
-        console.log(`-- Round ${round} --`);
-        console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
-    }
+    console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
 }
 
-function playGame()
+function resetScores()
 {
     computerScore = 0;
     playerScore = 0;
 }
 
-playGame();
+resetScores();
