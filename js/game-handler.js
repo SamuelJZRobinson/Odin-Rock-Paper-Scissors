@@ -10,8 +10,10 @@ let outcomeMessage = "";
 const rockButton = document.querySelector(".btn-rock");
 const paperButton = document.querySelector(".btn-paper");
 const scissorsButton = document.querySelector(".btn-scissors");
+const gameover = document.getElementById("gameover");
+gameover.style.display = "none";
 const gameoverText = document.getElementById("gameover-text");
-gameoverText.style.display = "none";
+const winnerText = document.getElementById("winner-text");
 const outcomeText = document.getElementById("outcome-text");
 const computerScoreText = document.getElementById("cpu-score-text");
 const playerScoreText = document.getElementById("player-score-text");
@@ -78,7 +80,16 @@ function playRound()
 
     if ((computerScore == 5) | (playerScore == 5))
     {
-        gameoverText.style.display = "block";
+        gameover.style.display = "block";
+
+        if (computerScore == 5)
+        {
+            winnerText.textContent = "CPU wins!";
+        }
+        else
+        {
+            winnerText.textContent = "Player wins!";
+        }
     }
     else
     {
