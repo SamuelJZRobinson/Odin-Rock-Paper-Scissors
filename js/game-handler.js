@@ -4,31 +4,40 @@ let computerScore = 0;
 let playerScore = 0;
 let playerSelection;
 let round = 0;
-let outcome = document.querySelector("outcome");
+let outcomeMessage = "";
+
+// Components
+const rockButton = document.querySelector(".btn-rock");
+const paperButton = document.querySelector(".btn-paper");
+const scissorsButton = document.querySelector(".btn-scissors");
+const gameoverText = document.getElementById("gameover-text");
+gameoverText.style.display = "none";
+const outcomeText = document.getElementById("outcome-text");
+const computerScoreText = document.getElementById("cpu-score-text");
+const playerScoreText = document.getElementById("player-score-text");
 
 // UI
-const rockButton = document.querySelector(".btn-rock");
 rockButton.addEventListener("click", () => {
     playerSelection = "rock";
     playRound();
 });
 
-const paperButton = document.querySelector(".btn-paper");
 paperButton.addEventListener("click", () => {
     playerSelection = "paper";
     playRound();
 });
 
-const scissorsButton = document.querySelector(".btn-scissors");
 scissorsButton.addEventListener("click", () => {
     playerSelection = "scissors";
     playRound();
 });
 
-// function showOutcome()
-// {
-//     outcome.textContent = "isadsjidsaij";
-// }
+function showOutcome(message)
+{
+    outcomeText.textContent = message;
+    computerScoreText.textContent = computerScore;
+    playerScoreText.textContent = playerScore;
+}
 
 // GAME LOGIC
 function getComputerChoice(arr)
@@ -42,7 +51,7 @@ function checkWin(computerSelection, playerSelection)
     // Check tie
     if (computerSelection == playerSelection)
     {
-        console.log(`Tie, ${computerSelection} cannot beat ${playerSelection}`);
+        outcomeMessage = `Tie, ${computerSelection} cannot beat ${playerSelection}!`;
     }
     // Check CPU win conditions
     else if (
@@ -50,16 +59,17 @@ function checkWin(computerSelection, playerSelection)
         (computerSelection == "paper" && playerSelection == "rock") ||
         (computerSelection == "scissors" && playerSelection == "paper"))
     {
-        console.log(`CPU wins, ${computerSelection} beats ${playerSelection}`);
+        outcomeMessage = `CPU wins, ${computerSelection} beats ${playerSelection}!`;
         computerScore++;
     }
+    // Player wins by default
     else
     {
-        console.log(`You win, ${playerSelection} beats ${computerSelection}`);
+        outcomeMessage = `You win, ${playerSelection} beats ${computerSelection}!`;
         playerScore++;
     }
 
-    // showOutcome();
+    showOutcome(outcomeMessage);
 }
 
 function playRound()
@@ -68,7 +78,7 @@ function playRound()
 
     if ((computerScore == 5) | (playerScore == 5))
     {
-        console.log("Gameover");
+        gameoverText.style.display = "block";
     }
     else
     {

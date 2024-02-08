@@ -2,22 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Rock, Paper, Scissors!</h1>
-    <div class="results">
-        <p class="outcome">The outcome is</p>
-        <div class="scores">
-            <p>CPU</p>
-            <p class="cpu-score">0</p>
-            <p>Player</p>
-            <p class="player-score">0</p>
-        </div>
+    <h1 class="centre">Rock, Paper, Scissors!</h1>
+    <h2 id="gameover-text" class="centre">Gameover!</h2>
+
+    <div id="outcome">
+        <p id="outcome-text" class="centre"></p>
     </div>
-    <div class="controller-container">
+
+    <div id="score-container">
+        <div id="score-bar">
+            <div class="score-item">
+                <img src="images/robot.png" height="48px" width="48px">
+                <div class="text-container">
+                    <strong><p>CPU</p></strong>
+                    <p id="cpu-score-text">0</p>
+                </div>
+            </div>
+
+            <div class="score-item">
+                <div class="score-item">
+                    <div class="text-container">
+                        <strong><p>Player</p></strong>
+                        <p id="player-score-text">0</p>
+                    </div>
+                    <img src="images/player.png" height="48px" width="48px">
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    <div id="control-container">
         <button class="btn-round btn-rock"><img src="images/rock.png"></button>
         <button class="btn-round btn-paper"><img src="images/paper.png"></button>
         <button class="btn-round btn-scissors"><img src="images/scissors.png"></button>
