@@ -1,9 +1,12 @@
+// GLOBAL VARIABLES
 const OPTIONS = ["rock", "paper", "scissors"]
 let computerScore = 0;
 let playerScore = 0;
 let playerSelection;
 let round = 0;
+let outcome = document.querySelector("outcome");
 
+// UI
 const rockButton = document.querySelector(".btn-rock");
 rockButton.addEventListener("click", () => {
     playerSelection = "rock";
@@ -22,6 +25,12 @@ scissorsButton.addEventListener("click", () => {
     playRound();
 });
 
+// function showOutcome()
+// {
+//     outcome.textContent = "isadsjidsaij";
+// }
+
+// GAME LOGIC
 function getComputerChoice(arr)
 {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -49,6 +58,8 @@ function checkWin(computerSelection, playerSelection)
         console.log(`You win, ${playerSelection} beats ${computerSelection}`);
         playerScore++;
     }
+
+    // showOutcome();
 }
 
 function playRound()
