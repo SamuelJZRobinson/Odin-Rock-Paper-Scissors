@@ -131,10 +131,10 @@ function checkWin() {
 }
 
 function playRound(playerMove) {
-  let cpuMove = getCpuChoice();
-  updateMoveUI(playerMove,cpuMove);
+  const CPU_MOVE = getCpuChoice();
+  updateMoveUI(playerMove,CPU_MOVE);
 
-  const OUTCOME = getOutcome(playerMove,cpuMove);
+  const OUTCOME = getOutcome(playerMove,CPU_MOVE);
   updateRoundPointUI(OUTCOME);
   setScore(OUTCOME);
   updateScoreUI();
