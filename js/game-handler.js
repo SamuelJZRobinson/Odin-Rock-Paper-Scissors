@@ -1,14 +1,14 @@
-// Variables
+// Global Variables
 let playerScore, cpuScore;
 let MAX_SCORE = 5;
 
 // DOM
 const PLAYER_SCORE = document.querySelector("#player .score");
 const PLAYER_MOVE = document.querySelector("#player .move");
-const PLAYER_POINT = document.querySelector("#player .round-point");
+const PLAYER_ROUND_POINT = document.querySelector("#player .round-point");
 const CPU_SCORE = document.querySelector("#cpu .score");
 const CPU_MOVE = document.querySelector("#cpu .move");
-const CPU_POINT = document.querySelector("#cpu .round-point");
+const CPU_ROUND_POINT = document.querySelector("#cpu .round-point");
 
 const BUT_ROCK = document.querySelector("#rock");
 const BUT_PAPER = document.querySelector("#paper");
@@ -35,26 +35,40 @@ BUT_RESTART.addEventListener("click", (e)=> {
 })
 
 // Game Logic
+/**
+ * Reset the game to its default state.
+ */
 function reset() {
   playerScore = cpuScore = 0;
 
   PLAYER_MOVE.innerHTML = CPU_MOVE.innerHTML = "";
   PLAYER_SCORE.textContent = CPU_SCORE.textContent = "0";
-  PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "0";
+  PLAYER_ROUND_POINT.style.opacity = CPU_ROUND_POINT.style.opacity = "0";
 
   POP_UP_CONTAINER.style.display = "none";
 
   console.log("Reset game");
 }
-// Reset to default
+// Reset game
 reset();
 
+/**
+ * Randomly generate a rps move for the CPU.
+ * 
+ * @returns string rps move
+ */
 function getCpuChoice() {
   const OPTIONS = ["rock", "paper", "scissors"]
   const randomIndex = Math.floor(Math.random() * OPTIONS.length);
   return OPTIONS[randomIndex];
 }
 
+/**
+ * Change the rps move icon display to the current player and CPU rps move.
+ * 
+ * @param {*} playerMove string rps move
+ * @param {*} cpuMove string rps move
+ */
 function updateMoveUI(playerMove,cpuMove) {
   PLAYER_MOVE.innerHTML = "";
   CPU_MOVE.innerHTML = "";
@@ -70,6 +84,13 @@ function updateMoveUI(playerMove,cpuMove) {
   CPU_MOVE.append(CPU_MOVE_IMG);
 }
 
+/**
+ * Determine the outcome of the player rps move vs the CPU rps move.
+ * 
+ * @param {*} playerMove string rps move
+ * @param {*} cpuMove string rps move
+ * @returns string winner
+ */
 function getOutcome(playerMove,cpuMove) {
   if (playerMove == cpuMove) {
     return "tie";
@@ -85,9 +106,13 @@ function getOutcome(playerMove,cpuMove) {
   }
 }
 
+/**
+ * Set the player and CPU score based on the outcome.
+ * Do nothing with a tie.
+ * 
+ * @param {*} outcome string winner
+ */
 function setScore(outcome) {
-  // Do nothing with tie
-
   if (outcome == "player"){
     playerScore++;
   }
@@ -96,29 +121,40 @@ function setScore(outcome) {
   }
 }
 
+/**
+ * Update the player and CPU score display with the latest values.
+ */
 function updateScoreUI() {
   PLAYER_SCORE.textContent = playerScore;
   CPU_SCORE.textContent = cpuScore;
 }
 
+/**
+ * Show whether the player or CPU recieves the round point based on the outcome.
+ * Default round point text is reset at the start.
+ * 
+ * @param {*} outcome string winner
+ */
 function updateRoundPointUI(outcome) {
-  // Default text
-  PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "0";
-  PLAYER_POINT.textContent = CPU_POINT.textContent = "+1 point";
+  PLAYER_ROUND_POINT.style.opacity = CPU_ROUND_POINT.style.opacity = "0";
+  PLAYER_ROUND_POINT.textContent = CPU_ROUND_POINT.textContent = "+1 point";
   
-  // Outcome text
   if(outcome == "tie") {
-    PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "1";
-    PLAYER_POINT.textContent = CPU_POINT.textContent = "Tie";
+    PLAYER_ROUND_POINT.style.opacity = CPU_ROUND_POINT.style.opacity = "1";
+    PLAYER_ROUND_POINT.textContent = CPU_ROUND_POINT.textContent = "Tie";
   }
   else if(outcome == "player") {
-    PLAYER_POINT.style.opacity = "1";
+    PLAYER_ROUND_POINT.style.opacity = "1";
   }
   else if(outcome == "cpu") {
-    CPU_POINT.style.opacity = "1";
+    CPU_ROUND_POINT.style.opacity = "1";
   }
 }
 
+/**
+ * Declare the winner if the player or CPU reaches the desired score.
+ * Show the restart button.
+ */
 function checkWin() {
   if (playerScore >= MAX_SCORE) {
     GAME_OUTCOME.textContent = "You win!";
@@ -130,6 +166,11 @@ function checkWin() {
   }
 }
 
+/**
+ * Executes the game logic for a single round when the player chooses a rps move.
+ * 
+ * @param {*} playerMove string rps move
+ */
 function playRound(playerMove) {
   const CPU_MOVE = getCpuChoice();
   updateMoveUI(playerMove,CPU_MOVE);
