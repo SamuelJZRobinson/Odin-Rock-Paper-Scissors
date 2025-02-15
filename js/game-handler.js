@@ -1,105 +1,143 @@
-// GLOBAL VARIABLES
-const OPTIONS = ["rock", "paper", "scissors"]
-let computerScore = 0;
-let playerScore = 0;
-let playerSelection;
-let outcomeMessage = "";
+// Variables
+let playerScore, cpuScore;
+let MAX_SCORE = 5;
 
-// Components
-const rockButton = document.querySelector(".btn-rock");
-const paperButton = document.querySelector(".btn-paper");
-const scissorsButton = document.querySelector(".btn-scissors");
-const gameover = document.getElementById("gameover");
-gameover.style.display = "none";
-const gameoverText = document.getElementById("gameover-text");
-const winnerText = document.getElementById("winner-text");
-const outcomeText = document.getElementById("outcome-text");
-const computerScoreText = document.getElementById("cpu-score-text");
-const playerScoreText = document.getElementById("player-score-text");
+// DOM
+const PLAYER_SCORE = document.querySelector("#player .score");
+const PLAYER_MOVE = document.querySelector("#player .move");
+const PLAYER_POINT = document.querySelector("#player .round-point");
+const CPU_SCORE = document.querySelector("#cpu .score");
+const CPU_MOVE = document.querySelector("#cpu .move");
+const CPU_POINT = document.querySelector("#cpu .round-point");
 
-// UI
-rockButton.addEventListener("click", () => {
-    playerSelection = "rock";
-    playRound();
+const BUT_ROCK = document.querySelector("#rock");
+const BUT_PAPER = document.querySelector("#paper");
+const BUT_SCISSORS = document.querySelector("#scissors");
+const BUT_RESTART = document.querySelector("#restart");
+
+const POP_UP_CONTAINER = document.querySelector("#pop-up-container");
+const GAME_OUTCOME = document.querySelector("#game-outcome");
+
+BUT_ROCK.addEventListener("click", (e) => {
+  playRound("rock");
 });
 
-paperButton.addEventListener("click", () => {
-    playerSelection = "paper";
-    playRound();
+BUT_PAPER.addEventListener("click", (e) => {
+  playRound("paper");
 });
 
-scissorsButton.addEventListener("click", () => {
-    playerSelection = "scissors";
-    playRound();
+BUT_SCISSORS.addEventListener("click", (e) => {
+  playRound("scissors");
 });
 
-function showOutcome(message)
-{
-    outcomeText.textContent = message;
-    computerScoreText.textContent = computerScore;
-    playerScoreText.textContent = playerScore;
+BUT_RESTART.addEventListener("click", (e)=> {
+  reset();
+})
+
+// Game Logic
+function reset() {
+  playerScore = cpuScore = 0;
+
+  PLAYER_MOVE.innerHTML = CPU_MOVE.innerHTML = "";
+  PLAYER_SCORE.textContent = CPU_SCORE.textContent = "0";
+  PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "0";
+
+  POP_UP_CONTAINER.style.display = "none";
+
+  console.log("Reset game");
+}
+// Reset to default
+reset();
+
+function getCpuChoice() {
+  const OPTIONS = ["rock", "paper", "scissors"]
+  const randomIndex = Math.floor(Math.random() * OPTIONS.length);
+  return OPTIONS[randomIndex];
 }
 
-// GAME LOGIC
-function getComputerChoice(arr)
-{
-    const randomIndex = Math.floor(Math.random() * arr.length);
-    return arr[randomIndex];
+function updateMoveUI(playerMove,cpuMove) {
+  PLAYER_MOVE.innerHTML = "";
+  CPU_MOVE.innerHTML = "";
+
+  const PLAYER_MOVE_IMG = document.createElement("img");
+  PLAYER_MOVE_IMG.setAttribute("src",`images/gallery/${playerMove}-icon.png`);
+  PLAYER_MOVE_IMG.setAttribute("alt",`${playerMove} move`);
+  PLAYER_MOVE.append(PLAYER_MOVE_IMG);
+
+  const CPU_MOVE_IMG = document.createElement("img");
+  CPU_MOVE_IMG.setAttribute("src",`images/gallery/${cpuMove}-icon.png`);
+  CPU_MOVE_IMG.setAttribute("alt",`${cpuMove} move`);
+  CPU_MOVE.append(CPU_MOVE_IMG);
 }
 
-function checkWin(computerSelection, playerSelection)
-{
-    // Check tie
-    if (computerSelection == playerSelection)
-    {
-        outcomeMessage = `Tie, ${computerSelection} cannot beat ${playerSelection}!`;
-    }
-    // Check CPU win conditions
-    else if (
-        (computerSelection == "rock" && playerSelection == "scissors") ||
-        (computerSelection == "paper" && playerSelection == "rock") ||
-        (computerSelection == "scissors" && playerSelection == "paper"))
-    {
-        outcomeMessage = `CPU wins, ${computerSelection} beats ${playerSelection}!`;
-        computerScore++;
-    }
-    // Player wins by default
-    else
-    {
-        outcomeMessage = `You win, ${playerSelection} beats ${computerSelection}!`;
-        playerScore++;
-    }
-
-    showOutcome(outcomeMessage);
-    checkGameOver();
+function getOutcome(playerMove,cpuMove) {
+  if (playerMove == cpuMove) {
+    return "tie";
+  }
+  else if (
+    (playerMove == "rock" && cpuMove == "scissors") ||
+    (playerMove == "paper" && cpuMove == "rock") ||
+    (playerMove == "scissors" && cpuMove == "paper")) {
+    return "player";
+  }
+  else {
+    return "cpu";
+  }
 }
 
-function checkGameOver()
-{
-    if (computerScore == 5)
-    {
-        gameover.style.display = "block";
-        winnerText.textContent = "CPU wins!";
-    }
-    else if (playerScore == 5)
-    {
-        gameover.style.display = "block";
-        winnerText.textContent = "Player wins!";
-    }
+function setScore(outcome) {
+  // Do nothing with tie
+
+  if (outcome == "player"){
+    playerScore++;
+  }
+  else if (outcome == "cpu"){
+    cpuScore++;
+  }
 }
 
-function playRound()
-{
-    computerSelection = getComputerChoice(OPTIONS);
-    checkWin(computerSelection, playerSelection);
-
-    console.log(`CPU: ${computerScore} | Player: ${playerScore}`);
+function updateScoreUI() {
+  PLAYER_SCORE.textContent = playerScore;
+  CPU_SCORE.textContent = cpuScore;
 }
 
-function resetScores()
-{
-    computerScore = 0;
-    playerScore = 0;
+function updateRoundPointUI(outcome) {
+  // Default text
+  PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "0";
+  PLAYER_POINT.textContent = CPU_POINT.textContent = "+1 point";
+  
+  // Outcome text
+  if(outcome == "tie") {
+    PLAYER_POINT.style.opacity = CPU_POINT.style.opacity = "1";
+    PLAYER_POINT.textContent = CPU_POINT.textContent = "Tie";
+  }
+  else if(outcome == "player") {
+    PLAYER_POINT.style.opacity = "1";
+  }
+  else if(outcome == "cpu") {
+    CPU_POINT.style.opacity = "1";
+  }
 }
 
-resetScores();
+function checkWin() {
+  if (playerScore >= MAX_SCORE) {
+    GAME_OUTCOME.textContent = "You win!";
+    POP_UP_CONTAINER.style.display = "block";
+  }
+  else if (cpuScore >= MAX_SCORE) {
+    GAME_OUTCOME.textContent = "You lose!";
+    POP_UP_CONTAINER.style.display = "block";
+  }
+}
+
+function playRound(playerMove) {
+  let cpuMove = getCpuChoice();
+  updateMoveUI(playerMove,cpuMove);
+
+  const OUTCOME = getOutcome(playerMove,cpuMove);
+  updateRoundPointUI(OUTCOME);
+  setScore(OUTCOME);
+  updateScoreUI();
+
+  checkWin();
+}

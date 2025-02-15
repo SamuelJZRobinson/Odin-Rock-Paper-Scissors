@@ -2,6 +2,7 @@
 :root{
   --container-bg: rgba(255,255,255,90%);
   --container-text: rgba(0,0,0,80%);
+  --green-but-bg: green;
 }
 
 /* Global */
@@ -49,17 +50,54 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Main */
-main{
+main {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100%;
   background: url("/images/backgrounds/tile.png") center center repeat;
-  background-size: 100%;
+  background-size: auto;
 }
 
-#container{
+#pop-up-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,30%);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5);
+  z-index: 1;
+}
+
+#end-game-notice {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 4rem;
+  position: relative;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: white;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+}
+
+#end-game-notice #game-outcome {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#container {
   display: inline-flex;
   flex-direction: column;
   gap: 2rem;
@@ -74,9 +112,18 @@ main{
   -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
 }
 
-h1.title{
+#title {
+  position: absolute;
+  top: 1rem;
   font-size: 2rem;
   font-weight: 900;
+  text-align: center;
+  color: var(--container-text);
+}
+
+#container #round{
+  font-size: 1.25rem;
+  font-weight: 600;
   text-align: center;
   color: var(--container-text);
 }
@@ -90,7 +137,7 @@ h1.title{
   width: 100%;
 }
 
-#player-container .card{
+#player-container .card {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -100,7 +147,7 @@ h1.title{
   color: var(--container-text);
 }
 
-.card .name{
+.card .name {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -108,25 +155,34 @@ h1.title{
   font-weight: normal;
 }
 
-.card .score{
+.card .score {
   font-size: 1.75rem;
   font-weight: 400;
   color: var(--container-text);
 }
 
-.move img{
+.move {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 5rem;
-  width: auto;
+  width: 5rem;
   padding: 1rem;
   border: 1px rgba(0, 0, 0, 15%) solid;
   border-radius: 0.5rem;
   background-color: rgba(0,0,0,15%);
 }
 
-.round-win{
-  color: green;
+.move img {
+  height: 100%;
+  width: auto;
+}
+
+.round-point {
   font-size: 1rem;
   font-weight: bold;
+  color: var(--green-but-bg);
+  opacity: 0;
 }
 
 /* Controls */
@@ -138,53 +194,70 @@ h1.title{
   width: 100%;
 }
 
-button {
+button{
+  cursor: pointer;
+}
+
+button.normal {
+  width: 8rem;
+  height: auto;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--green-but-bg);
+}
+
+button.normal:hover{
+  filter: brightness(75%);
+  -webkit-filter: brightness(75%);
+}
+
+button.round {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 7rem;
   width: 7rem;
-  cursor: pointer;
   border-radius: 100%;
   border: 8px rgba(0, 0, 0, 30%) solid;
 }
 
-button img {
+button.round img {
   height: 4rem;
   width: auto
 }
 
-#but-rock {
+#rock {
   background-color: #FF6961;
 }
 
-#but-rock:hover{
+#rock:hover {
   filter: brightness(75%);
   -webkit-filter: brightness(75%);
 }
 
-#but-paper {
+#paper {
   background-color: #ffc561;
 }
 
-#but-paper:hover{
+#paper:hover {
   filter: brightness(75%);
   -webkit-filter: brightness(75%);
 }
 
-#but-scissors{
+#scissors{
   background-color: #619aff;
 }
 
-#but-scissors:hover{
+#scissors:hover {
   filter: brightness(75%);
   -webkit-filter: brightness(75%);
 }
 
 /* Footer */
-#copyright{
+#copyright {
   position: absolute;
   bottom: 1rem;
-  left: 50%;
-  transform: translate(-50%);
 }

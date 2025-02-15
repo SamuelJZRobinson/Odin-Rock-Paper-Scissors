@@ -16,71 +16,45 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0"/>
 </head>
 <body>
-<main>
-  <div id="container">
-    <h1 class="title">Rock, Paper, Scissors!</h1>
-    <!--   
-      <div id="gameover">
-        <h2 id="gameover-text" class="centre">Gameover!</h2>
-        <h3 id="winner-text" class="centre"></h2>
-        </div> -->
-        
-        <!-- <div id="outcome">
-          <p id="outcome-text" class="centre"></p>
-        </div> -->
-      
+  <main>
+  <h1 id="title">Rock, Paper, Scissors</h1>
+
+  <div id="pop-up-container">
+    <div id="end-game-notice">
+      <p id="game-outcome">Outcome</p>
+      <button id="restart" class="normal">Play Again</button>
+    </div>
+  </div>
+
+  <div id="container">     
       <div id="player-container">
         <!-- Player Item -->
-        <div id="player-1" class="card">
+        <div id="player" class="card">
           <div class="name"><span class="material-symbols-outlined">person</span><p>Player</p></div>
           <p class="score">0</p>
-          <div class="move"><img src="images/gallery/rock-icon.png" alt=""></div>
-          <p class="round-win">+1 score</p>
+          <div class="move"></div>
+          <p class="round-point">#</p>
         </div>
         <!-- Player Item -->
-        <div id="player-2" class="card">
-          <div class="name"><span class="material-symbols-outlined">robot_2</span><p>Player</p></div>
+        <div id="cpu" class="card">
+          <div class="name"><span class="material-symbols-outlined">robot_2</span><p>CPU</p></div>
           <p class="score">0</p>
-          <div class="move"><img src="images/gallery/rock-icon.png" alt=""></div>
-          <p class="round-win">+1 score</p>
+          <div class="move"></div>
+          <p class="round-point">#</p>
         </div>
       </div>
 
-<!-- 
-    <div id="score-container">
-      <div id="score-bar">
-        <div class="score-item">
-          <img src="images/robot.png" height="48px" width="48px">
-          <div class="text-container">
-            <strong><p>CPU</p></strong>
-            <p id="cpu-score-text">0</p>
-          </div>
-        </div>
-        
-        <div class="score-item">
-          <div class="score-item">
-            <div class="text-container">
-              <strong><p>Player</p></strong>
-              <p id="player-score-text">0</p>
-            </div>
-            <img src="images/player.png" height="48px" width="48px">
-          </div>
-        </div>
-      </div>      
-    </div>
-           -->
     <div id="controls">
-      <button id="but-rock"><img src="images/gallery/rock-icon.png"></button>
-      <button id="but-paper"><img src="images/gallery/paper-icon.png"></button>
-      <button id="but-scissors"><img src="images/gallery/scissors-icon.png"></button>
+      <button id="rock" class="round"><img src="images/gallery/rock-icon.png"></button>
+      <button id="paper" class="round"><img src="images/gallery/paper-icon.png"></button>
+      <button id="scissors" class="round"><img src="images/gallery/scissors-icon.png"></button>
     </div>
   </div>
 
   <p id="copyright">&copy;2024-2025 Samuel Robinson</p>
 </main>
 
-
-  <!-- JS -->
-  <script src="js/game-handler.js"></script>
+<!-- JS -->
+<script src="js/game-handler.js"></script>
 </body>
 </html>
